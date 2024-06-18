@@ -2,41 +2,52 @@ import sqlite3 as lite
 
 con = lite.connect("dados.db")
 
-"""dados = ["Seringa", "5ML", "Descarpack", "10/08/2023", "Indefinido"]
-
 #cadastrar produtos
-with con:
-    cur = con.cursor()
-    query = "INSERT INTO produtos(desc, medida, fornecedor, fab, val) VALUES(?, ?, ?, ?, ?)"
-    cur.execute(query, dados)
-
-#crud
-
-
-atualizar_dados = ["Becker", "5ML", "Descarpack", "10/08/2023", "Indefinido", 1 ]
-#atualizar produtos
-with con:
-    cur = con.cursor()
-    query = "UPDATE produtos SET desc=?, medida=?, fornecedor=?, fab=?, val=? WHERE id=? "
-    cur.execute(query,atualizar_dados)"""
-    
-deletar_dados = str(4)  
-#remover produtos
-with con:
-    cur = con.cursor()
-    query = "DELETE FROM produtos WHERE id=?"
-    cur.execute(query,deletar_dados)
-
-ver_dados = []
+def cadastrar_produtos(i):
+    with con:
+        cur = con.cursor()
+        query = "INSERT INTO produtos(desc, medida, fornecedor, fab, val) VALUES(?, ?, ?, ?, ?)"
+        cur.execute(query,i)
 
 #visualizar produtos
-with con:
-    cur = con.cursor()
-    query = "SELECT * FROM produtos"
-    cur.execute(query)
-    
-    rows = cur.fetchall()
-    for row in rows:
-        ver_dados.append(row)
+def visualizar_produtos():
+    ver_dados = []
+    with con:
+        cur = con.cursor()
+        query = "SELECT * FROM produtos"
+        cur.execute(query)
         
-print(ver_dados)
+        rows = cur.fetchall()
+        for row in rows:
+            ver_dados.append(row)
+    return ver_dados
+        
+#pesquisar produtos
+def pesquisa_produtos(id):
+    pesquisa_pdt = []
+    with con:
+        cur = con.cursor()
+        query = "SELECT * FROM produtos WHERE id=?",
+        cur.execute(query,id)
+        
+        rows = cur.fetchall()
+        for row in rows:
+            pesquisa_pdt.append(row)
+
+#atualizar produtos
+def atualizar_produtos(i):
+    with con:
+        cur = con.cursor()
+        query = "UPDATE produtos SET desc=?, medida=?, fornecedor=?, fab=?, val=? WHERE id=? "
+        cur.execute(query,i)
+    
+#remover produtos
+def remover_produtos(i):
+    with con:
+        cur = con.cursor()
+        query = "DELETE FROM produtos WHERE id=?"
+        cur.execute(query,i)
+
+
+
+

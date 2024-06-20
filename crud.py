@@ -47,7 +47,3 @@ def remover_produtos(i):
         cur = con.cursor()
         query = "DELETE FROM produtos WHERE id=?"
         cur.execute(query,i)
-
-
-
-

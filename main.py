@@ -27,7 +27,7 @@ class adicionar(QtWidgets.QMainWindow):
     def closeEvent(self,event):
             self.atualizar()
 
-    def add(self):
+    def add(self,separar_medida):
         db = sqlite_db("Produtos.db")
         
         descri = self.ui.digitar_descricao.text()
@@ -36,11 +36,26 @@ class adicionar(QtWidgets.QMainWindow):
         fabri = self.ui.digitar_fab.text()
         valid = self.ui.digitar_val.text()
         
+        
         if descri == "" or med == "":
             QMessageBox.information(self, "Atenção!", "Preencha os campos obrigatorios!")
         else:
-            db.cadastra_apaga_edita("INSERT INTO produtos(desc, medida, fornecedor, fab, val) VALUES('{}', '{}', '{}', '{}', '{}')".format(descri, med, fornec, fabri, valid))
+            medida, unidade = self.separar_medida(med)
+            medida = int(medida)
+            db.cadastra_apaga_edita("INSERT INTO produtos(desc, medida, unidade, fornecedor, fab, val) VALUES('{}', '{}', '{}', '{}', '{}', '{}')".format(descri, medida, unidade, fornec, fabri, valid))
             QMessageBox.information(self, "Cadastro bem sucedido!", "Produto cadastrado com sucesso!")
+
+    def separar_medida(self,med):
+        import re
+        match = re.match(r"([0-9.]+)\s*([a-zA-Z]*)", med)
+        if match:
+            numero = match.group(1)
+            unidade = match.group(2)
+            return float(numero), unidade
+        else:
+            raise ValueError("Por favor, informe a quantidade e a unidade de medida!")
+
+    
     
 class visualizar(QtWidgets.QMainWindow):
     def __init__(self,*args,**argvs):

@@ -18,14 +18,20 @@ class sqlite_db:
     
     def criar_tabela(self):
         cur = self.cursor
-        cur.execute("""CREATE TABLE produtos(
-            id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            desc TEXT NOT NULL, 
-            medida TEXT NOT NULL, 
-            fornecedor TEXT, 
-            fab TEXT, 
-            val TEXT)
+        cur.execute("""CREATE TABLE login(
+            usuario TEXT NOT NULL,
+            senha TEXT NOT NULL)
             """)
+        
+        # cur.execute("""CREATE TABLE produtos(
+        #     id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        #     desc TEXT NOT NULL, 
+        #     medida INTEGER NOT NULL,
+        #     unidade TEXT NOT NULL,
+        #     fornecedor TEXT, 
+        #     fab TEXT, 
+        #     val TEXT)
+        #     """)
 
     def cadastra_apaga_edita(self,query,pesquisa=()):
         try:
@@ -41,7 +47,7 @@ class sqlite_db:
         cur.execute(query)
         return cur.fetchall()
 
-db = sqlite_db("Produtos.db")
+db = sqlite_db("login.db") #nome do banco de dados
 
 #db.criar_tabela()
 

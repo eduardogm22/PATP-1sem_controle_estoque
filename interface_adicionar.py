@@ -1,9 +1,7 @@
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
-class Ui_Visualizar(object):
+class Ui_adicionar(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1226, 777)
@@ -242,12 +240,12 @@ class Ui_Visualizar(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.janelas_principais.setCurrentIndex(0)
+        self.janelas_principais.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Cadastro de Produtos"))
         self.btn_pesquisa.setText(_translate("MainWindow", "Pesquisar"))
         self.btn_add.setText(_translate("MainWindow", "Adicionar"))
         self.btn_remove.setText(_translate("MainWindow", "Remover"))
@@ -261,20 +259,18 @@ class Ui_Visualizar(object):
         self.treeWidget.headerItem().setText(5, _translate("MainWindow", "Validade"))
         self.label_cadastro_prod.setText(_translate("MainWindow", "Cadastro de Produtos"))
         self.label_descricao.setText(_translate("MainWindow", "Descrição"))
-        self.label_medida.setText(_translate("MainWindow", "Medida"))
+        self.label_medida.setText(_translate("MainWindow", "Quantidade"))
         self.label_fornecedor.setText(_translate("MainWindow", "Fornecedor"))
         self.label_fab.setText(_translate("MainWindow", "Fabricação"))
         self.label_val.setText(_translate("MainWindow", "Validade"))
         self.btn_salvar.setText(_translate("MainWindow", "Adicionar"))
 
-import sys
 
 if __name__ == "__main__":
+    import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_Visualizar()
+    ui = Ui_adicionar()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
-

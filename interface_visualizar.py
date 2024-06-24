@@ -1,7 +1,9 @@
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
-class Ui_adicionar(object):
+class Ui_Visualizar(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1226, 777)
@@ -100,6 +102,7 @@ class Ui_adicionar(object):
 "border-radius: 0px;\n"
 "color: rgb(255, 255, 255);\n"
 "font: 75 40pt \"Times New Roman\";")
+        
         self.label_titulo.setAlignment(QtCore.Qt.AlignCenter)
         self.label_titulo.setObjectName("label_titulo")
         self.horizontalLayout.addWidget(self.label_titulo)
@@ -109,6 +112,28 @@ class Ui_adicionar(object):
         self.treeWidget.setObjectName("treeWidget")
         self.verticalLayout_3.addWidget(self.treeWidget)
         self.janelas_principais.addWidget(self.page_produtos)
+        self.treeWidget.setStyleSheet("""
+            QTreeWidget {
+                background-color: rgb(45, 49, 56);
+                border: 1px solid rgb(100, 100, 100);
+                color: white;
+                font-size: 12pt;
+            }
+            QTreeWidget::item {
+                background-color: rgb(60, 65, 72);
+                color: white;
+                border-top: 1px solid rgb(100, 100, 100);
+                border-bottom: 1px solid rgb(100, 100, 100);
+                padding: 5px;
+                font-size: 11pt;
+            }
+            QTreeWidget::item:selected {
+                background-color: rgb(85, 90, 97);
+            }
+            QTreeWidget::item:hover {
+                background-color: rgb(70, 75, 82);
+            }
+        """)
         self.page_cadastro = QtWidgets.QWidget()
         self.page_cadastro.setObjectName("page_cadastro")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.page_cadastro)
@@ -240,37 +265,41 @@ class Ui_adicionar(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.janelas_principais.setCurrentIndex(1)
+        self.janelas_principais.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Controle de Estoque Ideau"))
         self.btn_pesquisa.setText(_translate("MainWindow", "Pesquisar"))
         self.btn_add.setText(_translate("MainWindow", "Adicionar"))
         self.btn_remove.setText(_translate("MainWindow", "Remover"))
-        self.btn_editar.setText(_translate("MainWindow", "Editar"))
+        self.btn_editar.setText(_translate("MainWindow", "Entrada/ Saída"))
         self.label_titulo.setText(_translate("MainWindow", "Estoque Ideau"))
         self.treeWidget.headerItem().setText(0, _translate("MainWindow", "Código"))
         self.treeWidget.headerItem().setText(1, _translate("MainWindow", "Descrição"))
-        self.treeWidget.headerItem().setText(2, _translate("MainWindow", "Medida"))
+        self.treeWidget.setColumnWidth(1,600)
+        self.treeWidget.headerItem().setText(2, _translate("MainWindow", "Quantidade"))
         self.treeWidget.headerItem().setText(3, _translate("MainWindow", "Fornecedor"))
+        self.treeWidget.setColumnWidth(3,180)
         self.treeWidget.headerItem().setText(4, _translate("MainWindow", "Fabricação"))
         self.treeWidget.headerItem().setText(5, _translate("MainWindow", "Validade"))
         self.label_cadastro_prod.setText(_translate("MainWindow", "Cadastro de Produtos"))
         self.label_descricao.setText(_translate("MainWindow", "Descrição"))
-        self.label_medida.setText(_translate("MainWindow", "Medida"))
+        self.label_medida.setText(_translate("MainWindow", "Quantidade"))
         self.label_fornecedor.setText(_translate("MainWindow", "Fornecedor"))
         self.label_fab.setText(_translate("MainWindow", "Fabricação"))
         self.label_val.setText(_translate("MainWindow", "Validade"))
         self.btn_salvar.setText(_translate("MainWindow", "Adicionar"))
 
+import sys
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_adicionar()
+    ui = Ui_Visualizar()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
+

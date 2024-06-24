@@ -1,25 +1,35 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QDialog
-from
+from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox, QMainWindow
 from interface_login import Ui_Login
-from query import sqlite_db
+from interface_visualizar import Ui_Visualizar
+import sys
 
-class login(QDialog):
-    def __init__(self,*args,**argvs):
-        super(login,self).__init__(*args,**argvs)
+class Objeto_Login(QDialog):
+    def __init__(self, *args, **kwargs):
+        super(Objeto_Login, self).__init__(*args, **kwargs)
         self.ui = Ui_Login()
         self.ui.setupUi(self)
         self.ui.btn_logar.clicked.connect(self.fazer_login)
         
     def fazer_login(self):
-        
-    def cadastrar_usuario(self):
-        db = sqlite_db("login.db")
-        
         user = self.ui.digitar_usuario.text()
         password = self.ui.digitar_senha.text()
-
-        if user == "" or password == "":
-            QMessageBox.information(self, "Atenção!", "Preencha os campos obrigatorios!")
+        usuario = "admin"
+        senha = "admin"
+        
+        if user == usuario and senha == password:
+            self.abrir_visualizar()
         else:
-            db.cadastra_apaga_edita("INSERT INTO login(usuario, senha) VALUES('{}', '{}')".format(user, password))
-            QMessageBox.information(self, "Cadastro bem sucedido!", "Produto cadastrado com sucesso!")
+            QMessageBox.warning(self, "Não foi possível logar!", "Usuário e/ou senha incorretos")
+    
+    def abrir_visualizar(self):
+        # Criar uma QMainWindow temporária para exibir a interface Ui_Visualizar
+        self.visualizar_window = QMainWindow()
+        self.ui_visualizar = Ui_Visualizar()
+        self.ui_visualizar.setupUi(self.visualizar_window)
+        self.visualizar_window.show()
+        
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    dialog = Objeto_Login()
+    dialog.show()
+    sys.exit(app.exec_())

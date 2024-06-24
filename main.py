@@ -101,8 +101,8 @@ class visualizar(QtWidgets.QMainWindow):
         pesquisar.exec_()
         
     def abrir_es(self):
-        es = Objeto_ES(self.ui.treeWidget,self.mostrar_dados)
-        es.exec_()
+            es = Objeto_ES(self.ui.treeWidget,self.mostrar_dados)
+            es.exec_()
 class Objeto_Pesquisa(QDialog):
     def __init__(self,treeWidget,*args,**argvs):
         super(Objeto_Pesquisa,self).__init__(*args,**argvs)

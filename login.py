@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox, QMainWindow
+from PyQt5 import QtWidgets
 from interface_login import Ui_Login
 from interface_visualizar import Ui_Visualizar
 import sys
@@ -30,6 +31,8 @@ class Objeto_Login(QDialog):
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    dialog = Objeto_Login()
-    dialog.show()
+    loginn = QtWidgets.QMainWindow()
+    ui = Objeto_Login()
+    ui.setupUi(loginn)
+    loginn.show()
     sys.exit(app.exec_())

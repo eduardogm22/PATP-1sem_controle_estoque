@@ -1,276 +1,179 @@
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.Qt import Qt
+from PyQt5.QtCore import pyqtSlot
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtPrintSupport import *
+import os, sys
+from interface_visualizar import Ui_Visualizar
+from interface_adicionar import Ui_adicionar
+from query import sqlite_db
+from interface_pesquisa import Ui_Pesquisar
+from interface_entrada_saida import Ui_ES
 
+class adicionar(QtWidgets.QMainWindow):
+    def __init__(self,mostrar_dados,*args,**argvs):
+        super(adicionar,self).__init__(*args,**argvs)
+        self.ui = Ui_adicionar()
+        self.ui.setupUi(self)
+        self.ui.btn_salvar.clicked.connect(self.add)
+        self.atualizar = mostrar_dados
+        
+        quit = QtWidgets.QAction("Quit", self)
+        quit.triggered.connect(self.closeEvent)
+        
+    def closeEvent(self,event):
+            self.atualizar()
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1226, 777)
-        MainWindow.setStyleSheet("background-color: rgb(35, 39, 45);\n"
-"")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
-        self.stackedWidget.setObjectName("stackedWidget")
-        self.page_produtos = QtWidgets.QWidget()
-        self.page_produtos.setObjectName("page_produtos")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.page_produtos)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.btn_editar_3 = QtWidgets.QPushButton(self.page_produtos)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_editar_3.sizePolicy().hasHeightForWidth())
-        self.btn_editar_3.setSizePolicy(sizePolicy)
-        self.btn_editar_3.setMinimumSize(QtCore.QSize(90, 60))
-        self.btn_editar_3.setMaximumSize(QtCore.QSize(120, 60))
-        self.btn_editar_3.setStyleSheet("QPushButton{\n"
-"    background-color: #2a3137;\n"
-"    border-radius: 4px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    font: 75 12pt \"Segoe UI\";\n"
-"}\n"
-"QPushButton:hover{\n"
-"     background-color: #333b42;\n"
-"}")
-        self.btn_editar_3.setObjectName("btn_editar_3")
-        self.horizontalLayout.addWidget(self.btn_editar_3)
-        self.btn_add_2 = QtWidgets.QPushButton(self.page_produtos)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_add_2.sizePolicy().hasHeightForWidth())
-        self.btn_add_2.setSizePolicy(sizePolicy)
-        self.btn_add_2.setMinimumSize(QtCore.QSize(90, 60))
-        self.btn_add_2.setMaximumSize(QtCore.QSize(120, 60))
-        self.btn_add_2.setStyleSheet("QPushButton{\n"
-"    background-color: #2a3137;\n"
-"    border-radius: 4px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    font: 75 12pt \"Segoe UI\";\n"
-"}\n"
-"QPushButton:hover{\n"
-"     background-color: #333b42;\n"
-"}")
-        self.btn_add_2.setObjectName("btn_add_2")
-        self.horizontalLayout.addWidget(self.btn_add_2)
-        self.btn_remove_2 = QtWidgets.QPushButton(self.page_produtos)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_remove_2.sizePolicy().hasHeightForWidth())
-        self.btn_remove_2.setSizePolicy(sizePolicy)
-        self.btn_remove_2.setMinimumSize(QtCore.QSize(90, 60))
-        self.btn_remove_2.setMaximumSize(QtCore.QSize(120, 60))
-        self.btn_remove_2.setStyleSheet("QPushButton{\n"
-"    background-color: #2a3137;\n"
-"    border-radius: 4px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    font: 75 12pt \"Segoe UI\";\n"
-"}\n"
-"QPushButton:hover{\n"
-"     background-color: #333b42;\n"
-"}")
-        self.btn_remove_2.setObjectName("btn_remove_2")
-        self.horizontalLayout.addWidget(self.btn_remove_2)
-        self.btn_editar_2 = QtWidgets.QPushButton(self.page_produtos)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_editar_2.sizePolicy().hasHeightForWidth())
-        self.btn_editar_2.setSizePolicy(sizePolicy)
-        self.btn_editar_2.setMinimumSize(QtCore.QSize(90, 60))
-        self.btn_editar_2.setMaximumSize(QtCore.QSize(120, 60))
-        self.btn_editar_2.setStyleSheet("QPushButton{\n"
-"    background-color: #2a3137;\n"
-"    border-radius: 4px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    font: 75 12pt \"Segoe UI\";\n"
-"}\n"
-"QPushButton:hover{\n"
-"     background-color: #333b42;\n"
-"}")
-        self.btn_editar_2.setObjectName("btn_editar_2")
-        self.horizontalLayout.addWidget(self.btn_editar_2)
-        self.label = QtWidgets.QLabel(self.page_produtos)
-        self.label.setStyleSheet("background-color: #2a3137;\n"
-"border-radius: 0px;\n"
-"color: rgb(255, 255, 255);\n"
-"font: 75 40pt \"Times New Roman\";")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
-        self.horizontalLayout.addWidget(self.label)
-        self.verticalLayout_3.addLayout(self.horizontalLayout)
-        self.treeWidget = QtWidgets.QTreeWidget(self.page_produtos)
-        self.treeWidget.setStyleSheet("")
-        self.treeWidget.setObjectName("treeWidget")
-        self.verticalLayout_3.addWidget(self.treeWidget)
-        self.stackedWidget.addWidget(self.page_produtos)
-        self.page_cadastro = QtWidgets.QWidget()
-        self.page_cadastro.setObjectName("page_cadastro")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.page_cadastro)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.label_cadastro_prod = QtWidgets.QLabel(self.page_cadastro)
-        self.label_cadastro_prod.setMaximumSize(QtCore.QSize(1500, 70))
-        self.label_cadastro_prod.setStyleSheet("border-radius: 0px;\n"
-"color: rgb(255, 255, 255);\n"
-"font: 75 30pt \"Times New Roman\";")
-        self.label_cadastro_prod.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_cadastro_prod.setObjectName("label_cadastro_prod")
-        self.verticalLayout_2.addWidget(self.label_cadastro_prod)
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.label_3 = QtWidgets.QLabel(self.page_cadastro)
-        self.label_3.setMinimumSize(QtCore.QSize(110, 25))
-        self.label_3.setMaximumSize(QtCore.QSize(100, 25))
-        font = QtGui.QFont()
-        font.setFamily("Times New Roman")
-        font.setPointSize(17)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(9)
-        self.label_3.setFont(font)
-        self.label_3.setStyleSheet("border-radius: 0px;\n"
-"color: rgb(255, 255, 255);\n"
-"font: 75 17pt \"Times New Roman\";")
-        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.horizontalLayout_2.addWidget(self.label_3)
-        self.lineEdit = QtWidgets.QLineEdit(self.page_cadastro)
-        self.lineEdit.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout_2.addWidget(self.lineEdit)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.label_4 = QtWidgets.QLabel(self.page_cadastro)
-        self.label_4.setMinimumSize(QtCore.QSize(110, 0))
-        self.label_4.setMaximumSize(QtCore.QSize(100, 25))
-        self.label_4.setStyleSheet("border-radius: 0px;\n"
-"color: rgb(255, 255, 255);\n"
-"font: 75 17pt \"Times New Roman\";")
-        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_4.setObjectName("label_4")
-        self.horizontalLayout_7.addWidget(self.label_4)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.page_cadastro)
-        self.lineEdit_2.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit_2.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.horizontalLayout_7.addWidget(self.lineEdit_2)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_7)
-        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.label_8 = QtWidgets.QLabel(self.page_cadastro)
-        self.label_8.setMinimumSize(QtCore.QSize(110, 0))
-        self.label_8.setMaximumSize(QtCore.QSize(100, 25))
-        self.label_8.setStyleSheet("border-radius: 0px;\n"
-"color: rgb(255, 255, 255);\n"
-"font: 75 17pt \"Times New Roman\";")
-        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_8.setObjectName("label_8")
-        self.horizontalLayout_8.addWidget(self.label_8)
-        self.lineEdit_6 = QtWidgets.QLineEdit(self.page_cadastro)
-        self.lineEdit_6.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit_6.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.lineEdit_6.setObjectName("lineEdit_6")
-        self.horizontalLayout_8.addWidget(self.lineEdit_6)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_8)
-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.label_5 = QtWidgets.QLabel(self.page_cadastro)
-        self.label_5.setMinimumSize(QtCore.QSize(110, 0))
-        self.label_5.setMaximumSize(QtCore.QSize(100, 25))
-        self.label_5.setStyleSheet("border-radius: 0px;\n"
-"color: rgb(255, 255, 255);\n"
-"font: 75 17pt \"Times New Roman\";")
-        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_5.setObjectName("label_5")
-        self.horizontalLayout_6.addWidget(self.label_5)
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.page_cadastro)
-        self.lineEdit_3.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit_3.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.horizontalLayout_6.addWidget(self.lineEdit_3)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.label_6 = QtWidgets.QLabel(self.page_cadastro)
-        self.label_6.setMinimumSize(QtCore.QSize(110, 0))
-        self.label_6.setMaximumSize(QtCore.QSize(100, 25))
-        self.label_6.setStyleSheet("border-radius: 0px;\n"
-"color: rgb(255, 255, 255);\n"
-"font: 75 17pt \"Times New Roman\";")
-        self.label_6.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_6.setObjectName("label_6")
-        self.horizontalLayout_5.addWidget(self.label_6)
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.page_cadastro)
-        self.lineEdit_4.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit_4.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.horizontalLayout_5.addWidget(self.lineEdit_4)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.btn_salvar = QtWidgets.QPushButton(self.page_cadastro)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_salvar.sizePolicy().hasHeightForWidth())
-        self.btn_salvar.setSizePolicy(sizePolicy)
-        self.btn_salvar.setMinimumSize(QtCore.QSize(90, 60))
-        self.btn_salvar.setMaximumSize(QtCore.QSize(400, 60))
-        self.btn_salvar.setStyleSheet("QPushButton{\n"
-"    background-color: #2a3137;\n"
-"    border-radius: 4px;\n"
-"    color: rgb(255, 255, 255);\n"
-"    font: 75 12pt \"Segoe UI\";\n"
-"}\n"
-"QPushButton:hover{\n"
-"     background-color: #333b42;\n"
-"}")
-        self.btn_salvar.setObjectName("btn_salvar")
-        self.horizontalLayout_3.addWidget(self.btn_salvar)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
-        self.stackedWidget.addWidget(self.page_cadastro)
-        self.verticalLayout.addWidget(self.stackedWidget)
-        MainWindow.setCentralWidget(self.centralwidget)
+    def add(self,separar_medida):
+        db = sqlite_db("Produtos.db")
+        
+        descri = self.ui.digitar_descricao.text()
+        med = self.ui.digitar_medida.text()
+        fornec = self.ui.digitar_fornecedor.text()
+        fabri = self.ui.digitar_fab.text()
+        valid = self.ui.digitar_val.text()
+        
+        
+        if descri == "" or med == "":
+            QMessageBox.information(self, "Atenção!", "Preencha os campos obrigatorios!")
+        else:
+            medida, unidade = self.separar_medida(med)
+            medida = int(medida)
+            db.cadastra_apaga_edita("INSERT INTO produtos(desc, medida, unidade, fornecedor, fab, val) VALUES('{}', '{}', '{}', '{}', '{}', '{}')".format(descri, medida, unidade, fornec, fabri, valid))
+            QMessageBox.information(self, "Cadastro bem sucedido!", "Produto cadastrado com sucesso!")
 
-        self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    def separar_medida(self,med):
+        import re
+        match = re.match(r"([0-9.]+)\s*([a-zA-Z]*)", med)
+        if match:
+            numero = match.group(1)
+            unidade = match.group(2)
+            return float(numero), unidade
+        else:
+            raise ValueError("Por favor, informe a quantidade e a unidade de medida!")
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.btn_editar_3.setText(_translate("MainWindow", "Pesquisar"))
-        self.btn_add_2.setText(_translate("MainWindow", "Adicionar"))
-        self.btn_remove_2.setText(_translate("MainWindow", "Remover"))
-        self.btn_editar_2.setText(_translate("MainWindow", "Editar"))
-        self.label.setText(_translate("MainWindow", "Estoque Ideau"))
-        self.treeWidget.headerItem().setText(0, _translate("MainWindow", "Código"))
-        self.treeWidget.headerItem().setText(1, _translate("MainWindow", "Descrição"))
-        self.treeWidget.headerItem().setText(2, _translate("MainWindow", "Medida"))
-        self.treeWidget.headerItem().setText(3, _translate("MainWindow", "Fornecedor"))
-        self.treeWidget.headerItem().setText(4, _translate("MainWindow", "Fabricação"))
-        self.treeWidget.headerItem().setText(5, _translate("MainWindow", "Validade"))
-        self.label_cadastro_prod.setText(_translate("MainWindow", "Cadastro de Produtos"))
-        self.label_3.setText(_translate("MainWindow", "Descrição"))
-        self.label_4.setText(_translate("MainWindow", "Medida"))
-        self.label_8.setText(_translate("MainWindow", "Fornecedor"))
-        self.label_5.setText(_translate("MainWindow", "Fabricação"))
-        self.label_6.setText(_translate("MainWindow", "Validade"))
-        self.btn_salvar.setText(_translate("MainWindow", "Adicionar"))
+    
+    
+class visualizar(QtWidgets.QMainWindow):
+    def __init__(self,*args,**argvs):
+        super(visualizar,self).__init__(*args,**argvs)
+        self.ui = Ui_Visualizar()
+        self.ui.setupUi(self)
+        self.ui.btn_add.clicked.connect(self.abrir_tela_cadastro)
+        self.ui.btn_editar.clicked.connect(self.abrir_es)
+        self.ui.btn_remove.clicked.connect(self.remover)
+        self.ui.btn_pesquisa.clicked.connect(self.abrir_pesquisar)
+        self.mostrar_dados()
+        self.ui.treeWidget.itemClicked.connect(self.selecionar_item)
+        
+    def mostrar_dados(self):
+        db = sqlite_db("produtos.db")
+        lista = db.recebe_dados("SELECT * FROM produtos")
+        
+        self.ui.treeWidget.clear()
+        for dados in lista:
+            produto = QTreeWidgetItem([str(d) for d in dados])
+            self.ui.treeWidget.addTopLevelItem(produto)
 
+    def abrir_tela_cadastro(self):
+        self.add_window = adicionar(self.mostrar_dados)
+        self.add_window.show()
+    
+    def selecionar_item(self,produto,column):
+        produto.setFlags(produto.flags() | QtCore.Qt.ItemIsEditable)
+        self.ui.treeWidget.editItem(produto)
+            
+    
+    def remover(self):
+        selecionar_item = self.ui.treeWidget.currentItem()
+        if selecionar_item:
+            id_selecionado = selecionar_item.text(0)
+            db = sqlite_db("produtos.db")
+            db.cadastra_apaga_edita("DELETE FROM produtos WHERE id = {}".format(id_selecionado))
+            
+            self.ui.treeWidget.takeTopLevelItem(self.ui.treeWidget.indexOfTopLevelItem(selecionar_item))
+      
+    def abrir_pesquisar(self):
+        pesquisar = Objeto_Pesquisa(self.ui.treeWidget)
+        pesquisar.exec_()
+        
+    def abrir_es(self):
+            es = Objeto_ES(self.ui.treeWidget,self.mostrar_dados)
+            es.exec_()
+class Objeto_Pesquisa(QDialog):
+    def __init__(self,treeWidget,*args,**argvs):
+        super(Objeto_Pesquisa,self).__init__(*args,**argvs)
+        self.ui = Ui_Pesquisar()
+        self.ui.setupUi(self)
+        self.treeWidget = treeWidget
+        self.ui.btn_fazer_pesquisa.clicked.connect(self.procurar_produtos)
+        
+    def procurar_produtos(self):
+        produto_pesquisado = self.ui.digitar_pesquisa.text().lower()
+        for i in range(self.treeWidget.topLevelItemCount()):
+            produto_cadastrado = self.treeWidget.topLevelItem(i)
+            codigo = produto_cadastrado.text(0)
+            descricao = produto_cadastrado.text(1).lower()
+            if produto_pesquisado in codigo or produto_pesquisado in descricao:
+                produto_cadastrado.setHidden(False)
+            else:  
+                produto_cadastrado.setHidden(True)
 
+class Objeto_ES(QDialog):
+    def __init__(self,treeWidget,mostrar_dados,*args,**argvs):
+        super(Objeto_ES,self).__init__(*args,**argvs)
+        self.ui = Ui_ES()
+        self.ui.setupUi(self)
+        self.treeWidget = treeWidget
+        self.ui.btn_fluxo_salvar.clicked.connect(self.entrada_saida)
+        self.atualizar = mostrar_dados
+    
+    def entrada_saida(self):
+        produto_es = self.ui.digitar_id_es.text()
+        entrada = self.ui.digitar_entrada.text()
+        saida = self.ui.digitar_saida.text()
+        if saida:
+            saida = int(saida)
+            if produto_es and saida != "":
+                for i in range(self.treeWidget.topLevelItemCount()):
+                    produto_cadastrado = self.treeWidget.topLevelItem(i)
+                    codigo = produto_cadastrado.text(0)
+                    descricao = produto_cadastrado.text(1).lower()
+                    if produto_es == codigo or produto_es == descricao:
+                        db = sqlite_db("produtos.db")
+                        db.cadastra_apaga_edita("UPDATE produtos SET medida = medida -  ? WHERE id = ?",(saida,codigo))
+                        QMessageBox.information(self, "Alteração bem sucedida!", "Saida de produtos registrada!")
+                        break
+                else: QMessageBox.information(self, "Erro!", "Produto não encontrado!")
+
+        if entrada:
+            entrada = int(entrada)
+            if produto_es and entrada !="":
+                for i in range(self.treeWidget.topLevelItemCount()):
+                    produto_cadastrado = self.treeWidget.topLevelItem(i)
+                    codigo = produto_cadastrado.text(0)
+                    descricao = produto_cadastrado.text(1).lower()
+                    if produto_es == codigo or produto_es == descricao:
+                        db = sqlite_db("produtos.db")
+                        db.cadastra_apaga_edita("UPDATE produtos SET medida = medida +  ? WHERE id = ?",(entrada, codigo))
+                        QMessageBox.information(self, "Alteração bem sucedida!", "Entrada de produtos registrada!")
+                        break
+                else: QMessageBox.information(self, "Erro!", "Produto não encontrado!")
+                
+        quit = QtWidgets.QAction("Quit", self)
+        quit.triggered.connect(self.closeEvent)
+        
+    def closeEvent(self,event):
+            self.atualizar()
+            
+            
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    MainWindow = visualizar()
     MainWindow.show()
     sys.exit(app.exec_())
+
+    
